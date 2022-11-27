@@ -1,7 +1,7 @@
 package main
 
 import (
-    "os"
+    "log"
     "fmt"
     "github.com/maxnoe/adventofcode2022/aoc22"
 )
@@ -9,8 +9,7 @@ import (
 func main() {
     input, err := aoc22.GetInput(2021, 1)
     if (err != nil) {
-        fmt.Println("ERROR:", err)
-        os.Exit(1)
+        log.Fatalf("ERROR: %s", err)
     }
     fmt.Println(input)
 }
