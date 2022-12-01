@@ -1,26 +1,27 @@
 package main
 
 import (
-    "os"
-    "strconv"
-    "fmt"
-    "log"
-    "github.com/maxnoe/adventofcode2022/aoc22/day1"
+	"fmt"
+	"github.com/maxnoe/adventofcode2022/aoc22/day1"
+	"log"
+	"os"
+	"strconv"
 )
 
 func main() {
-    if len(os.Args) != 2 {
-        log.Fatal("Usage: ./main <day>")
-    }
+	if len(os.Args) != 2 {
+		log.Fatal("Usage: ./main <day>")
+	}
 
-    day, err := strconv.Atoi(os.Args[1]);
-    if err != nil {
-        log.Fatalf("Day must be an integer: %s", err)
-    }
+	day, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		log.Fatalf("Day must be an integer: %s", err)
+	}
 
-    fmt.Printf("Day %d\n", day)
+	fmt.Printf("Day %d\n", day)
 
-    switch day {
-	case 1: day1.Day1()
-    }
+	switch day {
+	case 1:
+		day1.Day1()
+	}
 }
