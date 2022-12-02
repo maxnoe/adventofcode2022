@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/maxnoe/adventofcode2022/aoc22/day1"
 	"log"
 	"os"
 	"strconv"
+	"github.com/maxnoe/adventofcode2022/aoc22/day1"
+	"github.com/maxnoe/adventofcode2022/aoc22/day2"
 )
 
 func main() {
@@ -23,5 +24,7 @@ func main() {
 	switch day {
 	case 1:
 		day1.Day1()
+	case 2:
+		day2.Day2()
 	}
 }
