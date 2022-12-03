@@ -55,8 +55,36 @@ func PartOne(rucksacks []Rucksack) int {
     return prio_sum
 }
 
+func toSet(r Rucksack) *hashset.Set {
+    items := hashset.New()
+    for _, item := range r.Comp1 {
+        items.Add(item)
+    }
+    for _, item := range r.Comp2 {
+        items.Add(item)
+    }
+    return items
+}
+
 func PartTwo(rucksacks []Rucksack) int {
-    return 0
+    n_elves := len(rucksacks)
+    n_groups := n_elves / 3
+
+    prio_sum := 0
+
+    for group := 0; group < n_groups; group++ {
+        first := 3 * group
+        items1 := toSet(rucksacks[first])
+        items2 := toSet(rucksacks[first + 1])
+        items3 := toSet(rucksacks[first + 2])
+
+        intersection := items1.Intersection(items2)
+        intersection = intersection.Intersection(items3)
+
+        badge := intersection.Values()[0].(rune)
+        prio_sum += Priority(badge)
+    }
+    return prio_sum
 }
 
 

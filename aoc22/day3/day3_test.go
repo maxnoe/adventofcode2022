@@ -50,3 +50,11 @@ func TestPartOne(t *testing.T) {
 		t.Errorf("Wrong answer: %d", answer)
 	}
 }
+
+
+func TestPartTwo(t *testing.T) {
+	answer := PartTwo(test_rucksacks)
+	if answer != 70 {
+		t.Errorf("Wrong answer: %d", answer)
+	}
+}
