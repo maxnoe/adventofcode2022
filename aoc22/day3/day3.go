@@ -8,29 +8,18 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22"
 )
 
-type Rucksack struct {
-    Comp1 string
-    Comp2 string
+func ParseInput(input string) []string {
+    return strings.Split(strings.Trim(input, "\n"), "\n")
 }
 
-func ParseInput(input string) []Rucksack {
-    lines := strings.Split(strings.Trim(input, "\n"), "\n")
-    rucksacks := make([]Rucksack, len(lines))
-
-    for i, line := range lines {
-        n := len(line)
-        rucksacks[i] = Rucksack{line[:n/2], line[n/2:]}
-    }
-    return rucksacks
-}
-
-func FindDuplicate(rucksack Rucksack) rune {
+func FindDuplicate(rucksack string) rune {
     comp1 := hashset.New()
-    for _, char := range rucksack.Comp1 {
+    n := len(rucksack) / 2
+    for _, char := range rucksack[:n] {
         comp1.Add(char)
     }
 
-    for _, char := range rucksack.Comp2 {
+    for _, char := range rucksack[n:] {
         if comp1.Contains(char) {
             return char
         }
@@ -46,7 +35,7 @@ func Priority(item rune) int {
     return 27 + int(item - 'A')
 }
 
-func PartOne(rucksacks []Rucksack) int {
+func PartOne(rucksacks []string) int {
     prio_sum := 0
     for _, r := range rucksacks {
         dupe := FindDuplicate(r)
@@ -55,18 +44,15 @@ func PartOne(rucksacks []Rucksack) int {
     return prio_sum
 }
 
-func toSet(r Rucksack) *hashset.Set {
+func toSet(r string) *hashset.Set {
     items := hashset.New()
-    for _, item := range r.Comp1 {
-        items.Add(item)
-    }
-    for _, item := range r.Comp2 {
+    for _, item := range r {
         items.Add(item)
     }
     return items
 }
 
-func PartTwo(rucksacks []Rucksack) int {
+func PartTwo(rucksacks []string) int {
     n_elves := len(rucksacks)
     n_groups := n_elves / 3
 
