@@ -61,7 +61,19 @@ func PartOne(input []Instruction) int {
 }
 
 func PartTwo(input []Instruction) int {
-    return 0
+    n := 0
+    for _, instruction := range input {
+        a := instruction[0]
+        b := instruction[1]
+        overlaps := (a.start >= b.start && a.stop <= b.stop) ||
+            (b.start >= a.start && b.stop <= a.stop) ||
+            (a.stop >= b.stop && a.start <= b.stop) ||
+            (b.stop >= a.stop && b.start <= a.stop)
+        if overlaps {
+            n += 1
+        }
+    }
+    return n
 }
 
 
