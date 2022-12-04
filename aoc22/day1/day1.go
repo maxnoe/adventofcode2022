@@ -54,5 +54,5 @@ func Day1() {
 	sort.Ints(total_calories)
 
 	log.Printf("Part1: %d", PartOne(total_calories))
-	log.Printf("Part1: %d", PartTwo(total_calories))
+	log.Printf("Part2: %d", PartTwo(total_calories))
 }
