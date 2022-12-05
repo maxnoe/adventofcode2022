@@ -9,6 +9,7 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22/day2"
 	"github.com/maxnoe/adventofcode2022/aoc22/day3"
 	"github.com/maxnoe/adventofcode2022/aoc22/day4"
+	"github.com/maxnoe/adventofcode2022/aoc22/day5"
 )
 
 func main() {
@@ -32,6 +33,8 @@ func main() {
 		day3.Day3()
 	case 4:
 		day4.Day4()
+	case 5:
+		day5.Day5()
 	default:
 		log.Fatalf("Unknown day: %d", day)
 	}
