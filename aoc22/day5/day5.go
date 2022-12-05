@@ -29,9 +29,22 @@ func CheckError(err error) {
     }
 }
 
+func CopyInput(input Input) Input {
+    c := Input{
+        make([][]byte, len(input.stacks)),
+        make([]Instruction, len(input.instructions)),
+    }
+    copy(c.instructions, input.instructions)
+    for i, stack := range input.stacks {
+        c.stacks[i] = make([]byte, len(stack))
+        copy(c.stacks[i], stack)
+    }
+
+    return c
+}
+
 func ParseInput(input_text string) Input {
     parts := strings.Split(strings.Trim(input_text, "\n"), "\n\n")
-
 
     stack_lines := strings.Split(parts[0], "\n")
     instruction_lines := strings.Split(parts[1], "\n");
@@ -72,7 +85,7 @@ func ParseInput(input_text string) Input {
     return input
 }
 
-func Move(stacks [][]byte, n int, from int, to int) [][]byte {
+func Move9000(stacks [][]byte, n int, from int, to int) [][]byte {
     from_stack := stacks[from - 1]
     to_stack := stacks[to - 1]
     for i := 0; i < n; i++ {
@@ -86,12 +99,42 @@ func Move(stacks [][]byte, n int, from int, to int) [][]byte {
     return stacks
 }
 
+func Move9001(stacks [][]byte, n int, from int, to int) [][]byte {
+    from_stack := stacks[from - 1]
+    to_stack := stacks[to - 1]
+
+    top := len(from_stack)
+    values := from_stack[top - n:top]
+    from_stack = from_stack[:top - n]
+    for _, value := range values {
+        to_stack = append(to_stack, value)
+    }
+
+    stacks[from - 1] = from_stack
+    stacks[to - 1] = to_stack
+    return stacks
+}
+
 func PartOne(input Input) string {
+    stacks := input.stacks
     for _, inst := range input.instructions {
-        input.stacks = Move(input.stacks, inst.n, inst.from, inst.to)
+        input.stacks = Move9000(stacks, inst.n, inst.from, inst.to)
     } 
-    result := make([]byte, len(input.stacks))
-    for i, stack := range input.stacks {
+    result := make([]byte, len(stacks))
+    for i, stack := range stacks {
+        top := len(stack) - 1
+        result[i] = stack[top]
+    }
+    return string(result)
+}
+
+func PartTwo(input Input) string {
+    stacks := input.stacks
+    for _, inst := range input.instructions {
+        stacks = Move9001(stacks, inst.n, inst.from, inst.to)
+    } 
+    result := make([]byte, len(stacks))
+    for i, stack := range stacks {
         top := len(stack) - 1
         result[i] = stack[top]
     }
@@ -105,6 +148,6 @@ func Day5() {
         log.Fatalf("Error getting input: %s", err)
     }
     input := ParseInput(input_text)
-
-    fmt.Printf("Part1: %s\n", PartOne(input))
+    fmt.Printf("Part1: %s\n", PartOne(CopyInput(input)))
+    fmt.Printf("Part2: %s\n", PartTwo(input))
 }
