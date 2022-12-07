@@ -23,12 +23,6 @@ type Input struct {
     instructions []Instruction
 }
 
-func CheckError(err error) {
-    if err != nil {
-        log.Fatalf("Error: %s", err)
-    }
-}
-
 func CopyInput(input Input) Input {
     c := Input{
         make([][]byte, len(input.stacks)),
@@ -73,11 +67,11 @@ func ParseInput(input_text string) Input {
         groups := re.FindStringSubmatch(line)
 
         n, err := strconv.Atoi(groups[1])
-        CheckError(err)
+        aoc22.CheckError(err)
         from, err := strconv.Atoi(groups[2])
-        CheckError(err)
+        aoc22.CheckError(err)
         to, err := strconv.Atoi(groups[3])
-        CheckError(err)
+        aoc22.CheckError(err)
 
         input.instructions[i] = Instruction{n, from, to}
     }
