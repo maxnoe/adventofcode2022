@@ -24,7 +24,6 @@ var test_input = Input{
 	},
 }
 
-
 func TestParseInput(t *testing.T) {
 	input := ParseInput(test_text)
 	if !reflect.DeepEqual(input.stacks, test_input.stacks) {

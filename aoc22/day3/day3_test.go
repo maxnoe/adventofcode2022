@@ -4,7 +4,6 @@ import (
 	"testing"
 )
 
-
 const test_input = `
 vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
@@ -14,7 +13,7 @@ ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw
 `
 
-var test_rucksacks = []string {
+var test_rucksacks = []string{
 	"vJrwpWtwJgWrhcsFMMfFFhFp",
 	"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
 	"PmmdzqPrVvPwwTWBwg",
@@ -24,7 +23,6 @@ var test_rucksacks = []string {
 }
 
 var test_duplicates = []rune("pLPvts")
-
 
 func TestParseInputs(t *testing.T) {
 	rucksacks := ParseInput(test_input)
@@ -50,7 +48,6 @@ func TestPartOne(t *testing.T) {
 		t.Errorf("Wrong answer: %d", answer)
 	}
 }
-
 
 func TestPartTwo(t *testing.T) {
 	answer := PartTwo(test_rucksacks)

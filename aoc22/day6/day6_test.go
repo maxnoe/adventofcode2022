@@ -2,8 +2,6 @@ package day6
 
 import "testing"
 
-
-
 var test_inputs = []string{
 	"mjqjpqmgbljsphdztnvjfqwrcgsmlb",
 	"bvwbjplbgvbhsrlpgdmjqwftvncz",
@@ -14,7 +12,6 @@ var test_inputs = []string{
 
 var expectedOne = []int{7, 5, 6, 10, 11}
 var expectedTwo = []int{19, 23, 23, 29, 26}
-
 
 func TestPartOne(t *testing.T) {
 	for i, input := range test_inputs {

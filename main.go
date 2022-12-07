@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"strconv"
 	"github.com/maxnoe/adventofcode2022/aoc22/day1"
 	"github.com/maxnoe/adventofcode2022/aoc22/day2"
 	"github.com/maxnoe/adventofcode2022/aoc22/day3"
@@ -12,6 +9,9 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22/day5"
 	"github.com/maxnoe/adventofcode2022/aoc22/day6"
 	"github.com/maxnoe/adventofcode2022/aoc22/day7"
+	"log"
+	"os"
+	"strconv"
 )
 
 func main() {
