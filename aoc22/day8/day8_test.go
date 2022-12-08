@@ -21,7 +21,6 @@ var test_trees = Trees{
 	{3, 5, 3, 9, 0},
 }
 
-
 func TestParse(t *testing.T) {
 	trees := ParseInput(test_input)
 	if !reflect.DeepEqual(trees, test_trees) {
