@@ -16,3 +16,11 @@ func CheckError(err error) {
         log.Fatalf("Error: %s", err)
     }
 }
+
+
+func AbsSign(x int) (int, int) {
+	if x < 0 {
+		return -x, -1
+	}
+	return x, 1
+}
