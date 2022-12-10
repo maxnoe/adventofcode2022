@@ -2,7 +2,6 @@ package day10
 
 import "testing"
 
-
 func Test(t *testing.T) {
 	small := ParseInput(small_test)
 	Execute(small)
@@ -20,7 +19,6 @@ noop
 addx 3
 addx -5
 `
-
 
 var test_input = `
 addx 15

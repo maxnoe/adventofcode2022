@@ -16,12 +16,10 @@ const (
 	ADDX
 )
 
-
 type Instruction struct {
-	op Op
+	op  Op
 	arg int
 }
-
 
 func ParseInput(input string) []Instruction {
 	lines := strings.Split(strings.Trim(input, "\n"), "\n")
@@ -34,7 +32,7 @@ func ParseInput(input string) []Instruction {
 		case "addx":
 			val, err := strconv.Atoi(parts[1])
 			aoc22.CheckError(err)
-			instructions[i] = Instruction{ADDX, val} 
+			instructions[i] = Instruction{ADDX, val}
 		default:
 			log.Fatalf("Error parsing input: %s", line)
 		}
@@ -63,14 +61,14 @@ func Execute(instructions []Instruction) int {
 
 	cycle := 1
 	for ; ; cycle++ {
-		if (cycle - 20) % 40 == 0 {
+		if (cycle-20)%40 == 0 {
 			strength := cycle * x
 			result += strength
 		}
 
 		pos := (cycle - 1) % 40
 
-		if (x - 1) <= pos && (pos <= x + 1) {
+		if (x-1) <= pos && (pos <= x+1) {
 			fmt.Print("#")
 		} else {
 			fmt.Print(".")

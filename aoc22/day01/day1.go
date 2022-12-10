@@ -1,4 +1,4 @@
-package day1
+package day01
 
 import (
 	"github.com/maxnoe/adventofcode2022/aoc22"
