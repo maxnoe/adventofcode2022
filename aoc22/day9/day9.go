@@ -64,17 +64,14 @@ func move_head(head *Position, dir Dir) {
 func move_tail(head Position, tail *Position) {
 	dx, xdir := aoc22.AbsSign(head.x - tail.x)
 	dy, ydir := aoc22.AbsSign(head.y - tail.y)
+	total := dx + dy
 
 	// horizontal move
 	if dx > 1 && dy == 0 {
 		tail.x += xdir
-	}
-	if dy > 1 && dx == 0 {
+	} else if dy > 1 && dx == 0 {
 		tail.y += ydir
-	}
-
-	// diagonal moves
-	if (dy > 1 && dx >= 1) || (dx > 1 && dy >= 1) {
+	} else if total > 2 {
 		tail.x += xdir
 		tail.y += ydir
 	}
@@ -85,23 +82,26 @@ func TailPositions(moves []Move, length int) int {
 	rope := make([]Position, length)
 	tail := length - 1
 
-	log.Print("\n\nSTART\n")
+	fmt.Print("START\n")
 	for _, move := range moves {
 		for step := 0; step < move.steps; step++ {
 
-			move_head(&rope[0], move.dir)
-			for i := 1; i < len(rope); i++ {
-				move_tail(rope[i - 1], &rope[i])
+			for i := 0; i < len(rope); i++ {
+				if i == 0 {
+					move_head(&rope[0], move.dir)
+				} else {
+					move_tail(rope[i - 1], &rope[i])
+				}
+				// for i, pos := range rope {
+				// 	if i > 0 {fmt.Print(",")}
+				// 	fmt.Printf("%d,%d", pos.x, pos.y)
+				// }
+				// fmt.Print("\n")
 			} 
 
 			val, _ := visited[rope[tail]]
 			visited[rope[tail]] = val + 1
 
-			// for i, pos := range rope {
-			// 	if i > 0 {fmt.Print(",")}
-			// 	fmt.Printf("%d,%d", pos.x, pos.y)
-			// }
-			// fmt.Print("\n")
 		}
 	}
 	return len(visited)

@@ -29,5 +29,5 @@ def update(row):
     return line,
 
 
-ani =  FuncAnimation(fig, update, frames=len(x), interval=250, blit=True)
+ani =  FuncAnimation(fig, update, frames=len(x), interval=100, blit=True)
 ani.save("correct.mp4")

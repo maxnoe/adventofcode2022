@@ -19,6 +19,9 @@ func CheckError(err error) {
 
 
 func AbsSign(x int) (int, int) {
+	if x == 0 {
+		return 0, 0
+	}
 	if x < 0 {
 		return -x, -1
 	}
