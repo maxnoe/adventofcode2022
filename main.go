@@ -13,12 +13,15 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22/day09"
 	"github.com/maxnoe/adventofcode2022/aoc22/day10"
 	"github.com/maxnoe/adventofcode2022/aoc22/day11"
+	"github.com/maxnoe/adventofcode2022/aoc22/day12"
 	"log"
 	"os"
 	"strconv"
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
+
 	if len(os.Args) != 2 {
 		log.Fatal("Usage: ./main <day>")
 	}
@@ -53,6 +56,8 @@ func main() {
 		day10.Day10()
 	case 11:
 		day11.Day11()
+	case 12:
+		day12.Day12()
 	default:
 		log.Fatalf("Unknown day: %d", day)
 	}
