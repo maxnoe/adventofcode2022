@@ -14,6 +14,7 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22/day10"
 	"github.com/maxnoe/adventofcode2022/aoc22/day11"
 	"github.com/maxnoe/adventofcode2022/aoc22/day12"
+	"github.com/maxnoe/adventofcode2022/aoc22/day13"
 	"log"
 	"os"
 	"strconv"
@@ -58,6 +59,8 @@ func main() {
 		day11.Day11()
 	case 12:
 		day12.Day12()
+	case 13:
+		day13.Day13()
 	default:
 		log.Fatalf("Unknown day: %d", day)
 	}
