@@ -76,3 +76,31 @@ func TestParseInput(t *testing.T) {
 		}
 	}
 }
+
+
+func TestCorrectOrder(t *testing.T) {
+	expected := []bool{true, true, false, true, false, true, false, false}
+	for i, pair := range test_pairs {
+		answer := CorrectOrder(pair)
+		if answer != expected[i] {
+			t.Errorf("Wrong answer for pair %d: %v != %v %v", i + 1, answer, expected[i], pair)
+		}
+	}
+}
+
+
+func TestPartOne(t *testing.T) {
+	expected := 13
+	answer := PartOne(test_pairs)
+	if answer != expected {
+		t.Errorf("Wrong answer %d", expected)
+	}
+}
+
+func TestPartTwo(t *testing.T) {
+	expected := 140
+	answer := PartTwo(test_pairs)
+	if answer != expected {
+		t.Errorf("Wrong answer %d", expected)
+	}
+}
