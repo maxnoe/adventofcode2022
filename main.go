@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/maxnoe/adventofcode2022/aoc22/day01"
 	"github.com/maxnoe/adventofcode2022/aoc22/day02"
 	"github.com/maxnoe/adventofcode2022/aoc22/day03"
@@ -33,7 +32,7 @@ func main() {
 		log.Fatalf("Day must be an integer: %s", err)
 	}
 
-	fmt.Printf("Day %d\n", day)
+	log.Printf("Day %d\n", day)
 
 	switch day {
 	case 1:
