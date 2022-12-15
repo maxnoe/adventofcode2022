@@ -79,21 +79,6 @@ func PartOne(input []Sensor, row int) int {
 	return len(excluded) - len(beacons)
 }
 
-func Min(a int, b int) int {
-	if a > b {
-		return b
-	}
-	return a
-}
-
-func Max(a int, b int) int {
-	if a < b {
-		return b
-	}
-	return a
-}
-
-
 type Range struct {
 	a int
 	b int
@@ -125,9 +110,10 @@ func PartTwo(sensors []Sensor, extent int) int {
 
 	var beacon Pos
 
+	excluded := make(Ranges, len(sensors))	
 	for y := 0; y <= extent; y++ {
-		excluded := make(Ranges, 0, len(sensors))	
 
+		n := 0
 		for i, sensor := range sensors {
 			dy := Abs(sensor.pos.y - y)
 			remaining := dists[i] - dy
@@ -135,14 +121,15 @@ func PartTwo(sensors []Sensor, extent int) int {
 				continue
 			}
 
-			excluded = append(excluded, Range{
+			excluded[n] = Range{
 				sensor.pos.x - remaining,
 				sensor.pos.x + remaining,
-			})
+			}
+			n++
 		}
-		sort.Sort(excluded)
+		sort.Sort(excluded[:n])
 		x := 0
-		for _, r := range excluded {
+		for _, r := range excluded[:n] {
 			if r.a <= x && r.b > x {
 				x = r.b + 1
 			}
