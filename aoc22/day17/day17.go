@@ -23,7 +23,6 @@ const (
 )
 
 var SHAPES = [...]Shape{HORIZONTAL, PLUS, ANGLE, VERTICAL, SQUARE}
-var HEIGHTS = [...]int{1, 3, 3, 4, 2}
 
 
 type Pos struct {
@@ -34,10 +33,10 @@ type Set map[Pos]bool
 
 var POSITIONS = map[Shape][]Pos{
 	HORIZONTAL: {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
-	PLUS: {{1, 0}, {0, -1}, {1, -1}, {2, -1}, {1, -2}},
-	ANGLE: {{2, 0}, {2, -1}, {0, -2}, {1, -2}, {2, -2}},
-	VERTICAL: {{0, 0}, {0, -1}, {0, -2}, {0, -3}},
-	SQUARE: {{0, 0}, {0, -1}, {1, 0}, {1, -1}},
+	PLUS: {{1, 2}, {0, 1}, {1, 1}, {2, 1}, {1, 0}},
+	ANGLE: {{0, 0}, {1, 0}, {2, 0}, {2, 1}, {2, 2}},
+	VERTICAL: {{0, 0}, {0, 1}, {0, 2}, {0, 3}},
+	SQUARE: {{0, 0}, {1, 0}, {0, 1}, {1, 1}},
 }
 
 
@@ -68,7 +67,7 @@ func Fill(pos Pos, rocks Set, shape Shape, max_y int) int {
 	return max_y
 }
 
-func PrintRocks(rocks Set, pos *Pos, shape *Shape, max_y int) {
+func PrintRocks(rocks Set, pos Pos, shape Shape, max_y int) {
 	max_y = max_y + 7
 	grid := make([][]byte, max_y + 1)
 	for i := range grid {
@@ -78,10 +77,8 @@ func PrintRocks(rocks Set, pos *Pos, shape *Shape, max_y int) {
 		}
 	}
 
-	if pos != nil {
-		for _, delta := range POSITIONS[*shape] {
-			grid[max_y - (pos.y + delta.y)][pos.x + delta.x] = '@'
-		}
+	for _, delta := range POSITIONS[shape] {
+		grid[max_y - (pos.y + delta.y)][pos.x + delta.x] = '@'
 	}
 	for rock := range rocks {
 		grid[max_y - rock.y][rock.x] = '#'
@@ -106,7 +103,7 @@ func PartOne(input string) int {
 	for n_rocks < 2023 {
 		idx := n_rocks % len(SHAPES)
 		shape := SHAPES[idx]
-		pos := Pos{2, max_y + 3 + HEIGHTS[idx]}
+		pos := Pos{2, max_y + 4}
 
 		for {
 			// PrintRocks(rocks, pos, shape, max_y)
@@ -131,7 +128,7 @@ func PartOne(input string) int {
 		}
 		n_rocks++
 	}
-	return max_y + 1
+	return max_y
 }
 
 func PartTwo(input string) int {
