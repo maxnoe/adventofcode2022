@@ -19,6 +19,7 @@ import (
 	"github.com/maxnoe/adventofcode2022/aoc22/day16"
 	"github.com/maxnoe/adventofcode2022/aoc22/day17"
 	"github.com/maxnoe/adventofcode2022/aoc22/day18"
+	"github.com/maxnoe/adventofcode2022/aoc22/day21"
 	"github.com/maxnoe/adventofcode2022/aoc22/day22"
 	"log"
 	"os"
@@ -76,6 +77,8 @@ func main() {
 		day17.Day17()
 	case 18:
 		day18.Day18()
+	case 21:
+		day21.Day21()
 	case 22:
 		day22.Day22()
 	default:
