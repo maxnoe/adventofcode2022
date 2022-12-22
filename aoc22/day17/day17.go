@@ -106,17 +106,45 @@ func Print(rocks Set, pos Pos, shape Shape, max_y int) {
 }
 
 
-func PartOne(input string) int {
+type Key struct {
+	shape_idx int
+	time_idx int
+}
+
+type Data struct {
+	rock int
+	time int
+}
+
+
+func Simulate(input string, n_rocks int) int {
 	time := 0
 	max_y := -1
 	rocks := make(Set)
+
+	seen_combinations := make(map[Key]Data)
+
+	period := 0
+	offset := 0
+	base_height := 0
+	delta_t := 0
+	rock := 0
+	shape_idx := rock % len(SHAPES)
+	shape := SHAPES[shape_idx]
+
 	
-	for n_rocks := 0; n_rocks < 2022; n_rocks++ {
-		shape := SHAPES[n_rocks % len(SHAPES)]
+	for rock = 0; rock < n_rocks; rock++ {
 		pos := Pos{2, max_y + 4}
 
+		shape_idx = rock % len(SHAPES)
+		shape = SHAPES[shape_idx]
+
+		// log.Printf("Rock %d, max_y=%d, shape=%d, time=%d", rock, max_y + 1, shape_idx, time)
+
+		key := Key{shape_idx, time % len(input)}
+		data, inside := seen_combinations[key]
+
 		for {
-			// Print(rocks, pos, shape, max_y)
 			move := input[time % len(input)]
 			time++
 
@@ -134,14 +162,49 @@ func PartOne(input string) int {
 				max_y = Fill(pos, rocks, shape, max_y)
 				break
 			}
+
 			pos.y--
 		}
+		seen_combinations[key] = Data{rock, time}
+
+
+		if inside && period == 0 {
+			log.Printf("Combination already seen at rock %d, %d rocks ago", data.rock, rock - data.rock)
+			period = rock - data.rock
+			offset = rock
+			base_height = max_y
+			delta_t = time - data.time
+		}
+
+		if period != 0 && rock - offset == 1000 * period {
+			remaining := n_rocks - rock
+			n_periods := remaining / period
+
+			diff := max_y - base_height
+			shift := diff * n_periods
+			max_y += shift
+
+			for key := range rocks {
+				rocks[Pos{key.x, key.y + shift}] = true
+			}
+			max_y = Fill(pos, rocks, shape, max_y)
+
+			rock += n_periods * period
+			time += n_periods * delta_t
+			log.Printf("Jumping ahead by %d rocks, diff=%d, total shift %d", n_periods * period, diff, shift)
+			continue
+		}
 	}
+	// log.Printf("Rock %d, max_y=%d, shape=%d, time=%d", rock, max_y + 1, shape_idx, time)
 	return max_y + 1
 }
 
+func PartOne(input string) int {
+	return Simulate(input, 2022)
+}
+
 func PartTwo(input string) int {
-	return 0
+	return Simulate(input, 1_000_000_000_000)
 }
 
 
@@ -149,7 +212,7 @@ func Day17() {
 	log.Print("Getting Input")
 	input, err := aoc22.GetInput(2022, 17)
 	input = strings.Trim(strings.Trim(input,"\n"), " ")
-	log.Printf("|%s|", input)
+	// log.Printf("|%s|", input)
 	aoc22.CheckError(err)
 
 	log.Print("Parsing Input")
