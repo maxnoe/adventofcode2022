@@ -1,13 +1,18 @@
 package day21
 
 import (
+	"fmt"
 	"log"
+	"math"
 	"strconv"
 	"strings"
+
 	"github.com/maxnoe/adventofcode2022/aoc22"
 )
 
-type Expression interface{}
+type Expression interface {
+	String() string
+}
 
 
 type Op byte
@@ -19,16 +24,35 @@ const (
 )
 
 type Constant struct {
-	name string
-	value int
+	Name string
+	Value int
 }
 
 
 type BinaryOp struct {
-	name string
+	Name string
 	Left string
 	Op Op
 	Right string
+}
+
+
+func (b BinaryOp) String() string  {
+	return fmt.Sprintf("(%s %s %s)", b.Left, string(b.Op), b.Right)
+}
+
+func (c Constant) String() string  {
+	if c.Name == "humn" {
+		return fmt.Sprintf("humn=%d", c.Value)
+	}
+	return fmt.Sprintf("%d", c.Value)
+}
+
+var Inverse = map[Op]Op {
+	Add: Sub,
+	Sub: Add,
+	Mul: Div,
+	Div: Mul,
 }
 
 func ParseInput(input string) map[string]Expression {
@@ -64,7 +88,7 @@ func eval(name string, expressions map[string]Expression) int {
 
 	switch t := expr.(type) {
 	case Constant:
-		return t.value
+		return t.Value
 	case BinaryOp:
 		left := eval(t.Left, expressions)
 		right := eval(t.Right, expressions)
@@ -88,7 +112,6 @@ const (
 	RIGHT FindResult = 2
 )
 
-
 func Find(start string, target string, expressions map[string]Expression) FindResult {
 	expr, exists := expressions[start]
 	CheckExists(exists, start)
@@ -111,7 +134,7 @@ func Find(start string, target string, expressions map[string]Expression) FindRe
 		}
 
 		return NOTFOUND
-	case int:
+	case Constant:
 		return NOTFOUND
 	}
 	return NOTFOUND
@@ -133,8 +156,17 @@ func PartOne(expressions map[string]Expression) int {
 	return eval("root", expressions)
 }
 
+func EvalHumn(humn int, e string, expressions map[string]Expression) int {
+	before, _ := expressions["humn"]
+	expressions["humn"] = Constant{"humn", humn}
+	val := eval(e, expressions)
+	expressions["humn"] = before
+	return val
+}
+
 func PartTwo(expressions map[string]Expression) int {
 	pos := Find("root", "humn", expressions)
+
 	root, _ := expressions["root"]
 
 	var expected_expr string
@@ -151,8 +183,29 @@ func PartTwo(expressions map[string]Expression) int {
 
 	expected := eval(expected_expr, expressions)
 
-	log.Printf("Found me in %s subtree, monkey expects: %d, expr %s", pos, expected, humn_expr)
-	return 0
+	humn := 0
+	actual := 0
+	low := 2
+	high := math.MaxInt >> 7
+
+	if EvalHumn(low, humn_expr, expressions) > EvalHumn(high, humn_expr, expressions) {
+		low, high = high, low
+	}
+
+	for actual != expected { 
+		high_val := EvalHumn(high, humn_expr, expressions)
+		humn = (low + high) / 2 + 1
+		actual = EvalHumn(humn, humn_expr, expressions)
+
+		if actual < high_val && actual > expected {
+			high = humn
+		} else {
+			low = humn
+		}
+
+	}
+
+	return humn
 }
 
 func Day21() {
