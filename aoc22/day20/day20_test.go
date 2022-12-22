@@ -48,20 +48,20 @@ func TestMod(t *testing.T) {
 	}
 }
 
-func TestMove(t *testing.T) {
-	numbers := make([]int, len(test_numbers[0]))
-	copy(numbers, test_numbers[0])
+// func TestMove(t *testing.T) {
+// 	numbers := make([]int, len(test_numbers[0]))
+// 	copy(numbers, test_numbers[0])
 
-	for i, number := range numbers {
-		input := make([]int, len(numbers))
-		copy(input, test_numbers[i])
+// 	for i, number := range numbers {
+// 		input := make([]int, len(numbers))
+// 		copy(input, test_numbers[i])
 
-		Move(number, input)
-		if !reflect.DeepEqual(input, test_numbers[i + 1]) {
-			t.Errorf("Wrong move result, i=%d, number=%d, expected:\n%v, got:\n%v", i, number, test_numbers[i+1], input)
-		}
-	} 
-}
+// 		Move(number, input)
+// 		if !reflect.DeepEqual(input, test_numbers[i + 1]) {
+// 			t.Errorf("Wrong move result, i=%d, number=%d, expected:\n%v, got:\n%v", i, number, test_numbers[i+1], input)
+// 		}
+// 	} 
+// }
 
 
 func TestPartOne(t *testing.T) {

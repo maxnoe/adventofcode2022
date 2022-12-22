@@ -42,23 +42,19 @@ func Find(number int, numbers []int) (int, error) {
 func Move(number int, numbers []int) {
 	pos, err := Find(number, numbers)
 	aoc22.CheckError(err)
-
-	target := Mod(pos + number, len(numbers) - 1)
-	if number < 0 && target == 0 {
-		target = len(numbers) - 1
+	n := number
+	delta := 1
+	if n < 0 {
+		n = -n
+		delta = -1
 	}
 
-	log.Printf("number=%d, pos=%d, target=%d, %v", number, pos, target, numbers)
-
-	if target > pos {
-		for i := pos + 1; i <= target; i++ {
-			numbers[i - 1], numbers[i] = numbers[i], numbers[i - 1]
-		}
-	} else {
-		for i := pos; i > target; i-- {
-			numbers[i - 1], numbers[i] = numbers[i], numbers[i - 1]
-		}
+	for i := 0; i < n; i++ {
+		other := Mod(pos + delta, len(numbers))
+		numbers[pos], numbers[other] = numbers[other], numbers[pos]
+		pos = other
 	}
+
 }
 
 func PartOne(input []int) int {
@@ -67,15 +63,18 @@ func PartOne(input []int) int {
 
 	for _, number := range input {
 		Move(number, numbers)
-		log.Printf("%d", numbers)
 	}
 
 	n := len(numbers)
 	zero, err := Find(0, numbers)
 	aoc22.CheckError(err)
+	log.Printf("0 is at %d", zero)
+
 	answer := 0
 	for i := 1000; i < 4000; i += 1000 {
-		answer += numbers[Mod(zero + i, n)]
+		val := numbers[Mod(zero + i, n)]
+		log.Printf("i = %d, val=%d", i, val)
+		answer += val
 	}
 	return answer
 }
