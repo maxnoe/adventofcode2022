@@ -94,7 +94,12 @@ func Print(s Set) {
 	fmt.Print("\n")
 }
 
-func Simulate(elves Set, max_moves int) int {
+func Simulate(input Set, max_moves int) int {
+	elves := make(Set)
+	for k, v := range input {
+		elves[k] = v
+	}
+
 	elves_moved := len(elves)
 	n_elves := len(elves)
 
