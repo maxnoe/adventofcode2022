@@ -1,8 +1,11 @@
 package day20
 
 import (
+	"log"
 	"reflect"
 	"testing"
+
+	"github.com/maxnoe/adventofcode2022/aoc22"
 )
 
 
@@ -48,20 +51,30 @@ func TestMod(t *testing.T) {
 	}
 }
 
-// func TestMove(t *testing.T) {
-// 	numbers := make([]int, len(test_numbers[0]))
-// 	copy(numbers, test_numbers[0])
+func TestMove(t *testing.T) {
+	numbers := make([]int, len(test_numbers[0]))
+	copy(numbers, test_numbers[0])
 
-// 	for i, number := range numbers {
-// 		input := make([]int, len(numbers))
-// 		copy(input, test_numbers[i])
+	for i, number := range numbers {
+		input := make([]int, len(numbers))
+		copy(input, test_numbers[i])
+		expected := test_numbers[i + 1]
 
-// 		Move(number, input)
-// 		if !reflect.DeepEqual(input, test_numbers[i + 1]) {
-// 			t.Errorf("Wrong move result, i=%d, number=%d, expected:\n%v, got:\n%v", i, number, test_numbers[i+1], input)
-// 		}
-// 	} 
-// }
+		Move(number, input)
+		zi, err := Find(0, input)
+		aoc22.CheckError(err)
+		ze, err := Find(0, expected)
+		aoc22.CheckError(err)
+
+		for i := range numbers {
+			log.Printf("%d %d", input[Mod(zi + i, len(numbers))], expected[Mod(ze + i, len(numbers))])
+			if input[Mod(zi + i, len(numbers))] != expected[Mod(ze + i, len(numbers))] {
+				t.Errorf("Mismatch, expected:\n%v, got:\n%v", expected, input)
+			}
+		}
+
+	} 
+}
 
 
 func TestPartOne(t *testing.T) {
